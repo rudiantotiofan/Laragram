@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Response;
+use App\Http\Requests\StoreImageRequest;
 use App\Image;
 
 class ImagesController extends Controller

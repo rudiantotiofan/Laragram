@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -70,7 +69,6 @@
         max-width: 100%;
         }
     </style>
-    
 @endsection
 @section('embedJS')
     <script src="{{ asset('default/js/custom.js') }}"></script>
@@ -89,7 +87,6 @@
     </script>
     <script type="text/javascript">
         $('body').on('click', '#submitForm', function(){
-        //$('imagesForm').submit(function(e){
             //var registerForm = $("#imagesForm");
             //var formData = registerForm.serialize();            
             var data = new FormData($("#imagesForm")[0]); // <-- 'this' is your form element
@@ -104,7 +101,6 @@
                     if(data.errors) {
                         if(data.errors.title){
                             $( '#title-error' ).html( data.errors.title[0] );
-                            alert(data.errors.title[0]);
                         }
                         if(data.errors.path){
                             $( '#path-error' ).html( data.errors.path[0] );

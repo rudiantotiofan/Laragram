@@ -41,9 +41,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if(Auth::check())
+                            <li><a href="{{ url('/home') }}">Dashboard</a></li>
                             @role('member')
-                                <li><a href="{{ url('/home') }}">Dashboard</a></li>    
-                                <li class="active"><a href="{{ url('member/images') }}">Album</a></li>    
+                                <li><a href="{{ url('member/images') }}">Album</a></li>    
+                            @endrole                            
+                            @role('admin')
+                                <li><a href="{{ url('admin/user') }}">User</a></li>    
                             @endrole                            
                         @endif
                     </ul>
@@ -82,7 +85,6 @@
         @yield('content')
     </div>
     <!-- Scripts -->
-    
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('mansory/masonry.pkgd.js') }}"></script>
     {{--  <script src="{{ asset('default/js/app.js') }}"></script>      --}}

@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'GuestsController@index');
 
 Auth::routes();
 
@@ -24,3 +22,11 @@ Route::group(['prefix'=>'member', 'middleware'=>['auth','role:member']], functio
     Route::post('images/store', array(
         'as' => 'img-store', 'uses' => 'ImagesController@store'));
 });
+
+Route::group(['prefix'=>'admin', 'middleware'=>['auth','role:admin']], function(){
+    Route::resource('users', 'UsersController');
+    Route::get('user', array(
+        'as' => 'admin-user', 'uses' => 'UsersController@index'));
+    
+});
+//routing ajax untuk menu admin : author

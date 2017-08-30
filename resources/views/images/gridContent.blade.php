@@ -1,4 +1,3 @@
-
 <style>
     #myImg {
         border-radius: 5px;
@@ -10,7 +9,7 @@
     #myImg:hover {opacity: 0.7;}
 
     /* The Modal (background) */
-    .modal {
+    .modal-img {
         display: none; /* Hidden by default */
         position: fixed; /* Stay in place */
         z-index: 1500; /* Sit on top */
@@ -25,7 +24,7 @@
     }
 
     /* Modal Content (Image) */
-    .modal-content {
+    .content-img {
         margin: auto;
         display: block;
         width: 80%;
@@ -33,7 +32,7 @@
     }
 
     /* Caption of Modal Image (Image Text) - Same Width as the Image */
-    #caption {
+    #img-caption {
         margin: auto;
         display: block;
         width: 80%;
@@ -45,7 +44,7 @@
     }
 
     /* Add Animation - Zoom in the Modal */
-    .modal-content, #caption {
+    .content-img, #img-caption {
         -webkit-animation-name: zoom;
         -webkit-animation-duration: 0.6s;
         animation-name: zoom;
@@ -82,7 +81,7 @@
 
     /* 100% Image Width on Smaller Screens */
     @media only screen and (max-width: 700px){
-        .modal-content {
+        .content-img {
             width: 100%;
         }
     }
@@ -104,16 +103,13 @@
 @endif
 
 <!-- The Modal -->
-<div id="showImage" class="modal">
-
+<div id="showImage" class="modal modal-img">
   <!-- The Close Button -->
   <span class="close" onclick="document.getElementById('showImage').style.display='none'">&times;</span>
-
   <!-- Modal Content (The Image) -->
-  <img class="modal-content" id="img01">
-
+  <img class="modal-content content-img" id="img01">
   <!-- Modal Caption (Image Text) -->
-  <div id="caption"></div>
+  <div id="img-caption"></div>
 </div>
 
 <script>
