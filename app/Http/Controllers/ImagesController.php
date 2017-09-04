@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Response;
 use App\Http\Requests\StoreImageRequest;
 use App\Image;
+use App\Comment;
 
 class ImagesController extends Controller
 {
@@ -89,7 +90,9 @@ class ImagesController extends Controller
     public function show($id)
     {
         $images = Image::find($id);
-        return view('images.show',compact('images'));
+        $comments = Comment::where('image_id',$id)
+                ->join('users','comments.user_id','=','users.id')->get();            
+        return view('images.show',compact('images','comments'));
     }
 
     /**

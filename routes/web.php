@@ -18,9 +18,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'member', 'middleware'=>['auth','role:member']], function(){
     Route::resource('images','ImagesController');
+    Route::resource('comments','CommentsController');
 
     Route::post('images/store', array(
         'as' => 'img-store', 'uses' => 'ImagesController@store'));
+    Route::get('album/{id}/show', array(
+        'as' => 'album.user', 'uses' => 'GuestsController@show'));
 });
 
 Route::group(['prefix'=>'admin', 'middleware'=>['auth','role:admin']], function(){

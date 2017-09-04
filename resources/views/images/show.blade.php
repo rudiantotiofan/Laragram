@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading" style="height:55px">
                 <span style="font-size:25px">Detail Images</span>
-                <a href="{{route('images.index')}}" class="btn btn-danger pull-right">Back</a>
+                <a href="{{route('images.index')}}" class="btn btn-primary pull-right">My Album</a>
                 </div>
 
                 <div class="panel-body">
@@ -23,11 +23,16 @@
                             <h2><b>{{$images->title}}</b></h2>
                             <p><b>Post at, {{$images->created_at}}</b></p>
                             <p>&emsp;{{$images->caption}}</p>
+
+                            <div id="commentContent" style="margin-top:30px">
+                                @include('images.comments')
+                            </div>
                             <div class="panel panel-info pb-cmnt-container" style="margin-top:15px">
                                 <div class="panel-body">
-                                    <textarea placeholder="Write your comment here!" class="pb-cmnt-textarea"></textarea>
                                     <form class="form-inline">
-                                        <button class="btn btn-primary pull-right" type="button">Send</button>
+                                        <textarea id="commentText" placeholder="Write your comment here!" class="pb-cmnt-textarea"></textarea>
+                                        <span class="text-danger"><strong id="text-error"></strong></span>
+                                        <button class="btn btn-primary pull-right" type="button" onclick="sendComment({{$images->id}})" style="margin-top:10px">Send</button>
                                     </form>
                                 </div>
                             </div>
@@ -134,6 +139,34 @@
             width: 100%;
         }
     }
+    .thumbnail {
+        padding:0px;
+    }
+    .panel {
+        position:relative;
+    }
+    .panel>.panel-heading:after,.panel>.panel-heading:before{
+        position:absolute;
+        top:11px;left:-16px;
+        right:100%;
+        width:0;
+        height:0;
+        display:block;
+        content:" ";
+        border-color:transparent;
+        border-style:solid solid outset;
+        pointer-events:none;
+    }
+    .panel>.panel-heading:after{
+        border-width:7px;
+        border-right-color:#f7f7f7;
+        margin-top:1px;
+        margin-left:2px;
+    }
+    .panel>.panel-heading:before{
+        border-right-color:#ddd;
+        border-width:8px;
+    }
 </style>
 <!-- The Modal -->
 <div id="showImage" class="modal modal-img">
@@ -168,5 +201,28 @@
     span.onclick = function() {
         modal.style.display = "none";
     } 
+
+    //comment ajax
+    function sendComment(id){
+        var text = $('#commentText').val();
+        $.ajax({
+            url:"{{route('comments.store')}}",
+            type:'POST',
+            data:{'image_id':id,'text':text},
+            success:function(data){
+                console.log(data);
+                console.log(data);
+                    if(data.errors) {
+                        if(data.errors.text){
+                            $( '#text-error' ).html( data.errors.text[0] );
+                        }
+                    }else{
+                        $( '#title-error' ).html("");
+                        $('#commentText').val("");
+                        $('#commentContent').html(data);
+                    }
+            }
+        });
+    }
 </script>
 @endsection

@@ -52,4 +52,8 @@ $app->singleton(
 |
 */
 
+//dingo API
+//$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+
+
 return $app;

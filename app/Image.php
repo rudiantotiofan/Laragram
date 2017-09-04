@@ -9,6 +9,9 @@ class Image extends Model
     protected $fillable = ['title','user_id','path','caption'];
 
     public function user(){
-        $this->belongsTo('App\User');
+        return $this->belongsTo('App\User');
+    }
+    public function Comments(){
+        return $this->hasMany('App\Comment');
     }
 }

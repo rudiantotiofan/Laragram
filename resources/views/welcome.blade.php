@@ -16,70 +16,61 @@
                         </div>
                     @endif  
                     <div id="imageContent">
-                        @include('images.gridContent')
+                        @if($albums->count()>0)
+                            <div class="grid">
+                                <div class="grid-sizer"></div>
+                                <?php $i=0;?>
+                                @foreach($albums as $item)
+                                <?php $i++?>
+                                    <div class="col-sm-3">
+                                        <div class="thumbnail" style="margin-bottom:0px">
+                                            <div id="" class="carousel slide myCarousel">
+                                                <!-- Carousel items -->
+                                                <div class="carousel-inner">
+                                                @if($item->images->count()>0)
+                                                    <?php $i=0;?>
+                                                    @foreach($item->images as $image)
+                                                        <div class="{!! $i == 0 ? 'active':'' !!} item" data-slide-number="{{$i}}">
+                                                            {!! Html::image(asset('img/upload/'.$image->path),null,['class'=>'img img-responsive','id'=>$i,'alt'=>$item->title,'height'=>'200px']) !!}
+                                                        </div>
+                                                        <?php $i++;?>
+                                                    @endforeach
+                                                @else
+                                                    <div class="active item" data-slide-number="0">
+                                                        {!! Html::image(asset('img/default/thumb.jpg'),null,['class'=>'img img-responsive','id'=>$i,'alt'=>'none','width'=>'100%']) !!}
+                                                    </div>
+                                                @endif
+                                                    
+                                                </div>
+                                            </div>
+                                            {{--  capiton  --}}
+                                            <div class="caption">
+                                                <h4><b>{{$item->name}}</b></h4>
+                                                <p> Images post, &emsp;{{$item->images->count()}}</p>
+                                                <a href="{{route('album.user',$item->id)}}" class="btn btn-default" role="button">
+                                                    <span class="glyphicon glyphicon-th">&nbsp;More</span>
+                                                </a> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            
+                        @else
+                            <blockquote>Join to Laragram now !</blockquote>                    
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 {{--  Custom CSS & JS  --}}
 @section('embedCSS')
     <link href="{{ asset('default/css/custom.css') }}" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; }
-
-        /* force scrollbar */
-        html { overflow-y: scroll; }
-
-        body { font-family: sans-serif; }
-
-        /* ---- grid ---- */
-
-        .grid {
-        background: #DDD;
-        padding:2px
-        }
-
-        /* clear fix */
-        .grid:after {
-        content: '';
-        display: block;
-        clear: both;
-        }
-
-        /* ---- .grid-item ---- */
-
-        .grid-sizer,
-        .grid-item {
-        width: 19.65%;
-        margin:2px;
-        }
-
-        .grid-item {
-        float: left;
-        }
-
-        .grid-item img {
-        display: block;
-        max-width: 100%;
-        }
-    </style>
 @endsection
 @section('embedJS')
     <script src="{{ asset('default/js/custom.js') }}"></script>
-    <script type="text/javascript">
-        // init Masonry
-        var grid = document.querySelector('.grid');
-        var msnry = new Masonry( grid, {
-            itemSelector: '.grid-item',
-            columnWidth: '.grid-sizer',
-            percentPosition: true
-        });
-        imagesLoaded( grid ).on( 'progress', function() {
-            // layout Masonry after each image loads
-            msnry.layout();
-        });
-    </script>
 @endsection

@@ -181,6 +181,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         //Laratrust
         Laratrust\LaratrustServiceProvider::class,
+        //Dingo API
+        //Dingo\Api\Provider\LaravelServiceProvider::class,
 
     ],
 
@@ -235,6 +237,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         //Laratrust
         'Laratrust'   => Laratrust\LaratrustFacade::class,
+        //dingo API
+        //'API' => Dingo\Api\Facade\API::class,
     ],
 
 ];
