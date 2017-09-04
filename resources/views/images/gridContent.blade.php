@@ -103,7 +103,7 @@
                             <span class="pull-right">
                                 @role('member')
                                 @if(Auth::user()->id==$item->user_id)
-                                    <button onclick="deleteImages({{$item->id}})" class="btn btn-danger">
+                                    <button onclick="popupDeleteImages({{$item->id}},'{{$item->title}}')" class="btn btn-danger">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 @endif

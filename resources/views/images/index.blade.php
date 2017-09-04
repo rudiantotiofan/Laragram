@@ -123,16 +123,22 @@
                 },
             });
         });
-        function deleteImages(id){
+        function popupDeleteImages(id,name){
+            $('#deleteModal').modal('show');
+            $('#delTitle').html(name);
+            $('#id_hidden').val(id);
+        }
+        function deleteImages(){
+            id = $('#id_hidden').val();
             $.ajax({
                 url:"images/"+id,
                 type:'DELETE',
                 data:{'id':id},
                 success:function(data){
                     console.log(data);
+                    $('#deleteModal').modal('hide');
                     $('#imageContent').html(data);
                     imagesLoaded( grid ).on( 'progress', function() {
-                            // layout Masonry after each image loads
                         msnry.layout();
                     });
                 }
