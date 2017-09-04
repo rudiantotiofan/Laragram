@@ -11,8 +11,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" style="height:55px">
                         <span class="panel-title pull-left" style="font-size:22px">User</span>
-                        {{--  <a href="{{ route('users.create') }}" class="btn btn-primary pull-right">Tambah</a>  --}}
-                        <button data-toggle="modal" data-target="#UserFormModal" class="btn btn-primary pull-right">Add New</button>
+                        {{--  <button data-toggle="modal" data-target="#UserFormModal" class="btn btn-primary pull-right">Add New</button>  --}}
+                        <button id="btnAddUser" class="btn btn-primary pull-right" onclick="showFormAdd()">Add New</button>
                     </div>
                     <div class="panel-body">
                         <div class="col-sm-12" style="margin-bottom:15px;padding:0px">
@@ -32,6 +32,12 @@
 @include('users.form')
 @section('embedJS')
     <script>
+        function clearErrorStatus(){
+            $('#name-error').html("");
+            $('#email-error').html("");
+            $('#password-error').html("");
+            $('#repassword-error').html("");
+        }
         function ajaxSearch(){
             var keyword = $('#search_key').val();
             $.ajax({
@@ -58,10 +64,9 @@
             }
         }
 
-        $('body').on('click','#submitForm',function(){
+        $('body').on('click','.add-user',function(){
             if(checkRePassword()){
                 var data = new FormData($("#usersForm")[0]);
-                
                 $.ajax({
                     url:"{{ route('users.store') }}",
                     type:'POST',
@@ -76,9 +81,7 @@
                             if(data.errors.password){ $('#password-error').html(data.errors.password[0]); }
                         }else{
                             $('#UserFormModal').modal('hide');
-                            $('#name-error').html("");
-                            $('#email-error').html("");
-                            $('#caption-error').html("");
+                            clearErrorStatus();
                             $('#usersForm')[0].reset();
                             $('#ajax-tables').html(data);
                         }
@@ -88,10 +91,57 @@
                 alert('Password not match!');
             }
         });
+        function updateUserAction(id){
+                
+            $.ajax({
+                url:"users/"+id,
+                type:'PUT',
+                data:{
+                    'name':$('#name').val(),
+                    'email':$('#email').val(),
+                    'password':$('#password').val(),
+                    'password_confirmation':$('#password-confirm').val()
+                },
+                success:function(data){
+                    console.log(data);
+                    if(data.errors){
+                        if(data.errors.name){ $('#name-error').html(data.errors.name[0]); }
+                        if(data.errors.email){ $('#email-error').html(data.errors.email[0]); }
+                        if($('#password').val()!=""){
+                            if(data.errors.password){ $('#password-error').html(data.errors.password[0]); }
+                        }
+                    }else{
+                        $('#UserFormModal').modal('hide');
+                        clearErrorStatus();
+                        $('#usersForm')[0].reset();
+                        $('#ajax-tables').html(data);
+                    }
+                }
+            });
+        }
+
+        $('body').on('click','.edit-user',function(){
+            var password = $('#password').val();
+            var id = $('#user-id').val();
+            if(password!=""){ //jika textbox password tidak kosong
+                if(checkRePassword()){
+                    updateUserAction(id);
+                }else{ alert('Password not match!'); }
+            }else{
+                updateUserAction(id);
+            }
+            
+        });
+        
         function showFormAdd(){
-            $('#repassword-error') .removeClass('edit');
-            $('#repassword-error') .removeClass('btn-primary');
-            $('#repassword-error').addClass('add');
+            clearErrorStatus();
+            $('#UserFormModal').modal('show');
+            $('#submitForm').removeClass('edit-user');
+            $('#submitForm').removeClass('btn-primary');
+            $('#submitForm').addClass('add-user');
+            $('#submitForm').addClass('btn-success');
+            $('#name').val("");
+            $('#email').val("");
         }
         function showFormEdit(id){  
             $.ajax({
@@ -100,9 +150,26 @@
                 data:{'id':id},
                 success:function(data){
                     console.log(data);
+                    clearErrorStatus();
                     $('#UserFormModal').modal('show');
+                    $('#submitForm').removeClass('add-user');
+                    $('#submitForm').removeClass('btn-success');
+                    $('#submitForm').addClass('btn-primary');
+                    $('#submitForm').addClass('edit-user');
+                    $('#user-id').val(data.id);
                     $('#name').val(data.name);
-                    $('#email').val(data.name);
+                    $('#email'  ).val(data.email);
+                }
+            });
+        }
+        function deleteUser(id){
+            $.ajax({
+                url:"users/"+id,
+                type:'DELETE',
+                data:{'id':id},
+                success:function(data){
+                    console.log(data);                    
+                    $('#ajax-tables').html(data);
                 }
             });
         }

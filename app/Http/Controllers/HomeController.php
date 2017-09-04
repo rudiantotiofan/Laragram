@@ -26,9 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /* if(Laratrust::hasRole('admin')) return $this->adminDashboard();
-        if(Laratrust::hasRole('member')) return $this->memberDashbaord(); */
-        return view('home');
+        if(Laratrust::hasRole('admin')) return $this->adminDashboard();
+        if(Laratrust::hasRole('member')) return $this->memberDashbaord();
+        //return view('home');
     }
 
     protected function adminDashboard(){

@@ -1,3 +1,52 @@
+@extends('layouts.app')
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="height:55px">
+                <span style="font-size:25px">Detail Images</span>
+                <a href="{{route('images.index')}}" class="btn btn-danger pull-right">Back</a>
+                </div>
+
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif  
+                    <div id="imageContent">
+                        <div class="col-md-5 col-xs-12">
+                            {!! Html::image(asset('img/upload/'.$images->path),null,['class'=>'img img-responsive','alt'=>$images->title,'width'=>'100%']) !!}    
+                        </div>
+                        <div class="col-md-7 col-xs-12">
+                            <h2><b>{{$images->title}}</b></h2>
+                            <p><b>Post at, {{$images->created_at}}</b></p>
+                            <p>&emsp;{{$images->caption}}</p>
+                            <div class="panel panel-info pb-cmnt-container" style="margin-top:15px">
+                                <div class="panel-body">
+                                    <textarea placeholder="Write your comment here!" class="pb-cmnt-textarea"></textarea>
+                                    <form class="form-inline">
+                                        <button class="btn btn-primary pull-right" type="button">Send</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .pb-cmnt-textarea {
+        resize: none;
+        padding: 20px;
+        height: 100px;
+        width: 100%;
+        border: 1px solid #F2F2F2;
+    }
+</style>
 <style>
     #myImg {
         border-radius: 5px;
@@ -86,43 +135,6 @@
         }
     }
 </style>
-@if($images->count()>0)
-    <div class="grid">
-        <div class="grid-sizer"></div>
-        <?php $i=0;?>
-        @foreach($images as $item)
-        <?php $i++?>
-            <div class="grid-item">
-                <div class="thumbnail" style="margin-bottom:0px">
-                    {!! Html::image(asset('img/upload/'.$item->path),null,['class'=>'img img-responsive','id'=>$i,'alt'=>$item->title,'width'=>'100%']) !!}    
-                    <div class="caption">
-                        <h4><b>{{$item->title}}</b></h4>
-                        <p style="font-size:13px">&emsp;{{$item->caption}}</p>
-                        <p>
-                            <small>0 Coment</small>
-                            <span class="pull-right">
-                                @role('member')
-                                @if(Auth::user()->id==$item->user_id)
-                                    <button onclick="deleteImages({{$item->id}})" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
-                                @endif
-                                @endrole
-                                <a href="{{route('images.show',$item->id)}}" class="btn btn-default" role="button">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </a> 
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
-    
-@else
-    <blockquote>Let's add a new picture !</blockquote>                    
-@endif
-
 <!-- The Modal -->
 <div id="showImage" class="modal modal-img">
   <!-- The Close Button -->
@@ -157,3 +169,4 @@
         modal.style.display = "none";
     } 
 </script>
+@endsection

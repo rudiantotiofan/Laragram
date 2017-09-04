@@ -123,5 +123,20 @@
                 },
             });
         });
+        function deleteImages(id){
+            $.ajax({
+                url:"images/"+id,
+                type:'DELETE',
+                data:{'id':id},
+                success:function(data){
+                    console.log(data);
+                    $('#imageContent').html(data);
+                    imagesLoaded( grid ).on( 'progress', function() {
+                            // layout Masonry after each image loads
+                        msnry.layout();
+                    });
+                }
+            });
+        }
     </script>
 @endsection

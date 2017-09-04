@@ -24,7 +24,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         //$users = User::where('name','like','%'.$request->keyword.'%')->where('id','<>',Auth::user()->id);
-        $users = User::whereNotIn('id',[Auth::user()->id])->where('name','like','%'.$request->keyword.'%')->get();
+        $users = User::with('roles')->whereNotIn('id',[Auth::user()->id])->where('name','like','%'.$request->keyword.'%')->get();
         if($request->ajax()){
             return view('users.tables',compact('users'));
         }else{
@@ -59,6 +59,7 @@ class UsersController extends Controller
         if($validator->passes()){
             $userStore = User::create($request->except('repassword'));
             $memberRole = Role::where('name','admin')->first();
+            $userStore->password = bcrypt($request->password);
             $userStore->attachRole($memberRole);
             $userStore->save();
 
@@ -67,7 +68,7 @@ class UsersController extends Controller
                 "message"   =>  "Admin account with name $request->name has been created successfully."
             ]);
 
-            $users = User::whereNotIn('id',[Auth::user()->id])->get();
+            $users = User::with('roles')->whereNotIn('id',[Auth::user()->id])->get();
             return view('users.tables',compact('users'));
         }
         return Response::json(['errors' => $validator->errors()]);
@@ -104,8 +105,31 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {        
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => ($request->password != "" ? 'string|min:6|confirmed' : '')
+        ]);
+        if($validator->passes()){
+            $userUpdate = User::find($id);
+            if($request->password != ""){
+                $userUpdate->update($request->all());
+                $userUpdate->password = bcrypt($request->password);
+            }else{
+                $userUpdate->update($request->except('password')) ;
+            }                
+            $userUpdate->save();
+
+            Session::flash("flash_notification",[
+                "level"     =>  "success",
+                "message"   =>  "Admin account with name $request->name has been updated successfully."
+            ]);
+
+            $users = User::with('roles')->whereNotIn('id',[Auth::user()->id])->get();
+            return view('users.tables',compact('users'));
+        }
+        return Response::json(['errors' => $validator->errors()]);
     }
 
     /**
@@ -116,6 +140,8 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $useDestroy = User::destroy($id);
+        $users = User::with('roles')->whereNotIn('id',[Auth::user()->id])->get();
+        return view('users.tables',compact('users'));
     }
 }

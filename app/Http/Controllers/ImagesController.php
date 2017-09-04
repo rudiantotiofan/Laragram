@@ -88,7 +88,8 @@ class ImagesController extends Controller
      */
     public function show($id)
     {
-        //
+        $images = Image::find($id);
+        return view('images.show',compact('images'));
     }
 
     /**
@@ -122,6 +123,8 @@ class ImagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $imageDestroy = Image::Destroy($id);
+        $images = Image::where('user_id',Auth::user()->id)->get();
+        return view('images.gridContent',compact('images'));
     }
 }

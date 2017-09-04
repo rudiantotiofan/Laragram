@@ -10,11 +10,12 @@
         </div>
         {{--  open form  --}}
         {!! Form::open([
-                        'url'   =>  route('users.store'),
-                        'mehtod'=>  'POST',
+                        'method'=>  'POST',
                         'class' =>  'form-horizontal',
                         'id'    =>  'usersForm'
                     ]) !!}
+        {!! Form::hidden('id',null,['id'=>'user-id']); !!}        
+        {{--  {!! Form::hidden('hide_password',null,['id'=>'hide_password']) !!}  --}}
                     
         <div class="modal-body">
 
@@ -40,7 +41,7 @@
                         <div class="form-group{{ $errors->has('password') ? ' has-error':'' }}">
                             {!! Form::label('password', 'Password', ['class'=>'col-md-4 control-label']) !!}
                             <div class="col-md-8">
-                                {!! Form::password('password', ['class'=>'form-control']) !!}
+                                {!! Form::password('password', ['class'=>'form-control','id'=>'password']) !!}
                                 <span class="text-danger"><strong id="password-error"></strong></span>
                             </div>  
                         </div>

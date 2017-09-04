@@ -88,6 +88,13 @@
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('mansory/masonry.pkgd.js') }}"></script>
     {{--  <script src="{{ asset('default/js/app.js') }}"></script>      --}}
+    <script>
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+    </script>
     @yield('embedJS')
 </body>
 </html>
