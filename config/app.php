@@ -182,7 +182,9 @@ return [
         //Laratrust
         Laratrust\LaratrustServiceProvider::class,
         //Dingo API
-        //Dingo\Api\Provider\LaravelServiceProvider::class,
+        Dingo\Api\Provider\LaravelServiceProvider::class,
+        //Cors
+        Barryvdh\Cors\ServiceProvider::class
 
     ],
 

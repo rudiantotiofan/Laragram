@@ -4,9 +4,72 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ec9a080fb82c78836d9eabee3d53562a",
-    "content-hash": "bea10cdd326c1dc98319e5a0a1ffe51e",
+    "hash": "9cbc98fcaf47c935f927262419f0d9d2",
+    "content-hash": "d3f9d3d271113affc0457c2837dd282d",
     "packages": [
+        {
+            "name": "barryvdh/laravel-cors",
+            "version": "v0.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-cors.git",
+                "reference": "2551489de60486471434b0c7050f7fc65f9c9119"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-cors/zipball/2551489de60486471434b0c7050f7fc65f9c9119",
+                "reference": "2551489de60486471434b0c7050f7fc65f9c9119",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.3.x|5.4.x|5.5.x",
+                "php": ">=5.5.9",
+                "symfony/http-foundation": "~3.1",
+                "symfony/http-kernel": "~3.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "3.x",
+                "phpunit/phpunit": "^4.8|^5.2",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\Cors\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\Cors\\": "src/"
+                },
+                "classmap": [
+                    "tests"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Laravel application",
+            "keywords": [
+                "api",
+                "cors",
+                "crossdomain",
+                "laravel"
+            ],
+            "time": "2017-08-28 11:42:05"
+        },
         {
             "name": "dingo/api",
             "version": "dev-master",
@@ -1550,16 +1613,16 @@
         },
         {
             "name": "santigarcor/laratrust",
-            "version": "4.0.3",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/santigarcor/laratrust.git",
-                "reference": "5a029a4f4a5c3a4171a8ee1a8b06e466a3cf6d0b"
+                "reference": "6f1a0ce6fff56c3724ca3a3e79e0e5ea89a39ef1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/santigarcor/laratrust/zipball/5a029a4f4a5c3a4171a8ee1a8b06e466a3cf6d0b",
-                "reference": "5a029a4f4a5c3a4171a8ee1a8b06e466a3cf6d0b",
+                "url": "https://api.github.com/repos/santigarcor/laratrust/zipball/6f1a0ce6fff56c3724ca3a3e79e0e5ea89a39ef1",
+                "reference": "6f1a0ce6fff56c3724ca3a3e79e0e5ea89a39ef1",
                 "shasum": ""
             },
             "require": {
@@ -1614,7 +1677,7 @@
                 "rbac",
                 "roles"
             ],
-            "time": "2017-07-26 16:52:20"
+            "time": "2017-09-05 19:23:51"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2824,16 +2887,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.7.1",
+            "version": "v1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "15ea9ac619e37009edcda64089e3fa4cc88aa659"
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/15ea9ac619e37009edcda64089e3fa4cc88aa659",
-                "reference": "15ea9ac619e37009edcda64089e3fa4cc88aa659",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
                 "shasum": ""
             },
             "require": {
@@ -2883,7 +2946,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-09-03 09:38:53"
+            "time": "2017-09-04 11:05:03"
         },
         {
             "name": "phpunit/php-code-coverage",

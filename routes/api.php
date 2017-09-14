@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Dingo\Api\Facade\API;
+use Dingo\Api\Facade\Route;;
+$api = app('Dingo\Api\Routing\Router');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +15,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+$api->version('v1', function ($api) {
+    $api->group(['middleware' => 'cors'], function ($api) {        
+        $api->resource('images', 'App\Http\Controllers\ImagesApiController');
+    });
 });
+
+/* Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+}); */
