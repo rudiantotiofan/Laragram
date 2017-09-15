@@ -48,7 +48,7 @@ class ImagesApiController extends Controller
      */
     public function show($id)
     {
-        $image = Image::find($id)->first();
+        $image = Image::where('id',$id)->first();
         return response()->json($image,200);
     }
 
